@@ -1,3 +1,5 @@
+<% require "dotenv"; Dotenv.load(".env") %>
+
 # Name of your application. Used to uniquely configure containers.
 service: crooz
 
@@ -7,7 +9,7 @@ image: crooz
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - <%= ENV.fetch("KAMAL_WEB_HOST") %>
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -79,10 +81,11 @@ asset_path: /rails/public/assets
 
 # Configure the image builder.
 builder:
-  arch: amd64
+  arch: arm64
 
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
+  remote: ssh://root@<%= ENV.fetch("KAMAL_WEB_HOST") %>
   #
   # # Pass arguments and secrets to the Docker build process
   # args:
