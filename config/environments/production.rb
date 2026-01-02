@@ -58,7 +58,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # config.action_mailer.default_url_options = { host: "example.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -87,4 +87,15 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+
+  # Base URL for links in emails and other external references.
+  if base_url = ENV["BASE_URL"].presence
+    uri = URI.parse(base_url)
+    url_options = { host: uri.host, protocol: uri.scheme }
+    url_options[:port] = uri.port if uri.port != uri.default_port
+
+    routes.default_url_options = url_options
+    config.action_mailer.default_url_options = url_options
+  end
 end

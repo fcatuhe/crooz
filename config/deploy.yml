@@ -24,7 +24,9 @@ servers:
 #
 proxy:
   ssl: true
-  host: crooz.club
+  hosts:
+    - crooz.club
+    - crooz.ing
 
 # Where you keep your container images.
 registry:
@@ -59,6 +61,8 @@ env:
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
+
+    BASE_URL: https://crooz.club
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.
