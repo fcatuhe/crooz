@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
-port = 64002
+ENV["PORT"] ||= "64002"
 
-exec "./bin/rails", "server", "-p", port.to_s, *ARGV
+exec "./bin/rails", "server", *ARGV

@@ -83,5 +83,5 @@ Rails.application.configure do
     "127.0.0.1"
   ]
 
-  config.action_mailer.default_url_options = { host: "#{config.hosts.first}:64002" }
+  config.action_mailer.default_url_options = { host: config.hosts.first, port: ENV.fetch("PORT", 3000) }
 end
