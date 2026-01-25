@@ -465,21 +465,84 @@ class Passage < ApplicationRecord
 end
 ```
 
-### Passageable Concern
+### Passageable Concern (recommended pattern)
+
+Following 37signals approach: **no `passage_types` table**, metadata lives in code.
 
 ```ruby
+# app/models/concerns/passageable.rb
 module Passageable
   extend ActiveSupport::Concern
   
   included do
     has_one :passage, as: :passageable, touch: true
+    
+    class_attribute :passage_category
+    class_attribute :passage_icon
   end
+  
+  class_methods do
+    def category(name)
+      self.passage_category = name
+    end
+    
+    def icon(emoji)
+      self.passage_icon = emoji
+    end
+    
+    # All passageable classes in a category
+    def in_category(cat)
+      Passageable.types.select { |t| t.constantize.passage_category == cat }
+    end
+  end
+  
+  # Registry of all passageable types
+  TYPES = %w[Refuel Regas Recharge Service Tire Body Glass Repair Upgrade Tune Tale].freeze
+  
+  def self.types = TYPES
   
   # Capabilities (override in concrete types)
   def commentable? = false
   def exportable? = true
   def copyable? = true
 end
+
+# app/models/passageables/refuel.rb
+class Refuel < ApplicationRecord
+  include Passageable
+  
+  category :energy
+  icon "⛽"
+end
+
+# app/models/passageables/service.rb
+class Service < ApplicationRecord
+  include Passageable
+  
+  category :maintenance
+  icon "🔧"
+end
+```
+
+### Querying by category
+
+```ruby
+# app/models/passage.rb
+class Passage < ApplicationRecord
+  # Scope to filter by category
+  scope :in_category, ->(cat) {
+    types = Passageable.in_category(cat)
+    where(passageable_type: types)
+  }
+end
+
+# Usage
+croozer.passages.in_category(:energy)      # All refuels, regases, recharges
+croozer.passages.in_category(:maintenance) # All services, tires, repairs...
+
+# Direct type query (Rails delegated_type provides this)
+croozer.passages.refuels    # Only Refuel passages
+croozer.passages.services   # Only Service passages
 ```
 
 ---
