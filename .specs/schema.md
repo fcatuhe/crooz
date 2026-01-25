@@ -123,7 +123,7 @@ flowchart TB
 ```mermaid
 erDiagram
     users {
-        bigint id PK
+        bigint id
         string email
         string password_digest
         string name
@@ -132,32 +132,32 @@ erDiagram
     }
 
     crews {
-        bigint id PK
+        bigint id
         string name
         text description
     }
 
     clubs {
-        bigint id PK
+        bigint id
         string name
         string slug
         text description
     }
 
     memberships {
-        bigint id PK
+        bigint id
         string memberable_type
-        bigint memberable_id FK
-        bigint user_id FK
+        bigint memberable_id
+        bigint user_id
         string role
         decimal ownership_share
         boolean is_owner
     }
 
     tenders {
-        bigint id PK
+        bigint id
         string tenderable_type
-        bigint tenderable_id FK
+        bigint tenderable_id
     }
 
     users ||--o{ memberships : "has"
@@ -174,26 +174,26 @@ erDiagram
 ```mermaid
 erDiagram
     tenders {
-        bigint id PK
+        bigint id
         string tenderable_type
-        bigint tenderable_id FK
+        bigint tenderable_id
     }
 
     croozers {
-        bigint id PK
+        bigint id
         string name
         string slug
         text bio
-        bigint tender_id FK
+        bigint tender_id
         string croozable_type
-        bigint croozable_id FK
+        bigint croozable_id
         date acquired_on
         string reading_type
         string reading_unit
     }
 
     cars {
-        bigint id PK
+        bigint id
         string make
         string model
         bigint year
@@ -205,7 +205,7 @@ erDiagram
     }
 
     motorcycles {
-        bigint id PK
+        bigint id
         string make
         string model
         bigint year
@@ -215,7 +215,7 @@ erDiagram
     }
 
     boats {
-        bigint id PK
+        bigint id
         string make
         string model
         bigint year
@@ -226,7 +226,7 @@ erDiagram
     }
 
     planes {
-        bigint id PK
+        bigint id
         string make
         string model
         bigint year
@@ -247,22 +247,22 @@ erDiagram
 ```mermaid
 erDiagram
     croozers {
-        bigint id PK
+        bigint id
         string name
     }
 
     users {
-        bigint id PK
+        bigint id
         string name
     }
 
     passages {
-        bigint id PK
-        bigint croozer_id FK
-        bigint parent_id FK
-        bigint author_id FK
+        bigint id
+        bigint croozer_id
+        bigint parent_id
+        bigint author_id
         string passageable_type
-        bigint passageable_id FK
+        bigint passageable_id
         date started_on
         date ended_on
         decimal start_reading
@@ -280,13 +280,13 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        bigint id PK
+        bigint id
         string passageable_type
-        bigint passageable_id FK
+        bigint passageable_id
     }
 
     refuels {
-        bigint id PK
+        bigint id
         decimal liters
         bigint price_cents
         string fuel_type
@@ -294,7 +294,7 @@ erDiagram
     }
 
     regases {
-        bigint id PK
+        bigint id
         decimal kilograms
         bigint price_cents
         string gas_type
@@ -302,7 +302,7 @@ erDiagram
     }
 
     recharges {
-        bigint id PK
+        bigint id
         decimal kwh
         bigint price_cents
         string charge_type
@@ -320,41 +320,41 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        bigint id PK
+        bigint id
         string passageable_type
-        bigint passageable_id FK
+        bigint passageable_id
     }
 
     services {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
     }
 
     tires {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
     }
 
     bodies {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
     }
 
     glasses {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
     }
 
     repairs {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
@@ -372,13 +372,13 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        bigint id PK
+        bigint id
         string passageable_type
-        bigint passageable_id FK
+        bigint passageable_id
     }
 
     upgrades {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
@@ -386,7 +386,7 @@ erDiagram
     }
 
     tunes {
-        bigint id PK
+        bigint id
         text description
         bigint cost_cents
         string shop
@@ -396,7 +396,7 @@ erDiagram
     }
 
     tales {
-        bigint id PK
+        bigint id
         string title
         string slug
         text body
