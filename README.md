@@ -25,42 +25,39 @@ bin/dev
 
 ## Deployment
 
-### Required files (gitignored)
+### Deploy
 
-#### `.env`
+#### Required file (gitignored)
+
+`.env` — Kamal deployment variables:
 
 ```bash
 KAMAL_WEB_HOST=your.server.ip.address
 ```
 
-#### `.infra/kamal-ansible-manager/inventory`
+Then:
+
+```bash
+bin/kamal deploy
+```
+
+### Server provisioning (first time)
+
+#### Required file (gitignored)
+
+`.infra/kamal-ansible-manager/inventory` — Ansible hosts:
 
 ```ini
 [webservers]
 your.server.ip.address
 ```
 
-### Server provisioning (first time)
+Then:
 
 ```bash
 cd .infra/kamal-ansible-manager
 ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml
-```
-
-### Deploy
-
-```bash
-bin/kamal deploy
-```
-
-### Useful aliases
-
-```bash
-bin/kamal console  # Rails console
-bin/kamal shell    # Bash shell
-bin/kamal logs     # Tail logs
-bin/kamal dbc      # Database console
 ```
 
 ## License
