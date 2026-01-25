@@ -6,6 +6,15 @@ This file provides guidance to AI coding agents working with this repository.
 
 Crooz is a platform for car enthusiasts to share and celebrate every ride. Users can track their vehicles, log fuel consumption, maintenance, and write stories about their rides.
 
+## Stack
+
+- **Ruby 4** / **Rails 8**
+- **SQLite 3** (database)
+- **Hotwire** (Turbo + Stimulus)
+- **No-build** — vanilla CSS and JS, no bundler, no transpiler
+- **Kamal** (deployment)
+- **SolidQueue** (background jobs)
+
 ## Development Commands
 
 ### Setup and Server
