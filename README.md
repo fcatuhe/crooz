@@ -4,9 +4,9 @@ A platform for car enthusiasts.
 
 ## Stack
 
-- Ruby 4.0
-- Rails 8.1
-- SQLite 3.47
+- Ruby 4
+- Rails 8
+- SQLite 3
 - Hotwire/Turbo
 - No-build (vanilla CSS/JS)
 - Kamal (deployment)
@@ -17,7 +17,7 @@ A platform for car enthusiasts.
 bin/setup
 ```
 
-You'll need `config/master.key` to decrypt credentials. Ask a team member for it.
+You will need `config/master.key` to decrypt credentials. Ask a team member for it.
 
 ```bash
 bin/dev
@@ -27,9 +27,9 @@ bin/dev
 
 ### Deploy
 
-#### Required file (gitignored)
+#### `.env` (gitignored)
 
-`.env` — Kamal deployment variables:
+Kamal deployment variables:
 
 ```bash
 KAMAL_WEB_HOST=your.server.ip.address
@@ -43,9 +43,9 @@ bin/kamal deploy
 
 ### Server provisioning (first time)
 
-#### Required file (gitignored)
+#### `.infra/kamal-ansible-manager/inventory` (gitignored)
 
-`.infra/kamal-ansible-manager/inventory` — Ansible hosts:
+Ansible hosts:
 
 ```ini
 [webservers]
