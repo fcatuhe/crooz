@@ -1,24 +1,81 @@
-# README
+# Crooz
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Plateforme pour passionnés d'automobile.
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+- Rails 8, Ruby, SQLite
+- Hotwire/Turbo
+- No-build (CSS/JS vanilla)
+- Kamal (deploy)
 
-* System dependencies
+## Getting Started
 
-* Configuration
+```bash
+bin/setup
+bin/dev
+```
 
-* Database creation
+## Configuration
 
-* Database initialization
+### Required files (gitignored)
 
-* How to run the test suite
+These files contain sensitive data and must be created manually:
 
-* Services (job queues, cache servers, search engines, etc.)
+#### `.env`
 
-* Deployment instructions
+Environment variables for Kamal deployment:
 
-* ...
+```bash
+# .env
+KAMAL_WEB_HOST=your.server.ip.address
+```
+
+#### `config/master.key`
+
+Rails master key for credentials encryption. Generate with:
+
+```bash
+bin/rails credentials:edit
+```
+
+Or copy from a secure location if joining an existing project.
+
+#### `.infra/kamal-ansible-manager/inventory`
+
+Ansible inventory for server provisioning:
+
+```ini
+# .infra/kamal-ansible-manager/inventory
+[webservers]
+your.server.ip.address
+```
+
+## Deployment
+
+### Server provisioning (first time)
+
+```bash
+cd .infra/kamal-ansible-manager
+ansible-galaxy install -r requirements.yml
+ansible-playbook playbook.yml
+```
+
+### Deploy
+
+```bash
+bin/kamal deploy
+```
+
+### Useful aliases
+
+```bash
+bin/kamal console  # Rails console
+bin/kamal shell    # Bash shell
+bin/kamal logs     # Tail logs
+bin/kamal dbc      # Database console
+```
+
+## License
+
+See [LICENSE.md](LICENSE.md)
