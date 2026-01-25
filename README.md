@@ -27,15 +27,15 @@ bin/dev
 
 ### Deploy
 
-#### `.env` (gitignored)
+#### Required file (gitignored)
 
-Kamal deployment variables:
+`.env` — Kamal deployment variables:
 
 ```bash
 KAMAL_WEB_HOST=your.server.ip.address
 ```
 
-Then:
+#### Run
 
 ```bash
 bin/kamal deploy
@@ -43,16 +43,16 @@ bin/kamal deploy
 
 ### Server provisioning (first time)
 
-#### `.infra/kamal-ansible-manager/inventory` (gitignored)
+#### Required file (gitignored)
 
-Ansible hosts:
+`.infra/kamal-ansible-manager/inventory` — Ansible hosts:
 
 ```ini
 [webservers]
 your.server.ip.address
 ```
 
-Then:
+#### Run
 
 ```bash
 cd .infra/kamal-ansible-manager
