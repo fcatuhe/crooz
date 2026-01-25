@@ -1,6 +1,6 @@
 # Crooz
 
-A platform for car enthusiasts.
+Crooz Club · share and celebrate every ride.
 
 ## Stack
 
