@@ -18,7 +18,6 @@ Crooz is a platform for car enthusiasts to share and celebrate every ride. Users
   - SolidCable (WebSockets)
   - SolidCache (caching)
 - **Kamal** (deployment)
-- **Propshaft** (asset pipeline)
 
 ## Development Commands
 
