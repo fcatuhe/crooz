@@ -24,6 +24,27 @@ Benefits:
 
 Like a mountain pass 🏔️ — you enter, traverse, and exit.
 
+### Tender (Ownership Model)
+
+**Tender** = who/how a croozer is owned. Determines pricing and access model.
+
+| Tender | Pricing | Access | Use case |
+|--------|---------|--------|----------|
+| **User** | Free | Solo | My personal car |
+| **Club** | Free | Open (membership) | Non-profit car club, association |
+| **Crew** | Paid 💰 | Closed (invite-only) | Co-ownership, private stable |
+
+**Club** = open to all, join via membership (public adhésion)
+**Crew** = private, invite-only
+
+**Crew features (premium):**
+- Ownership shares (50/50, 70/30...)
+- Roles per member (mechanic, driver, detailer...)
+- Invite non-owners (mechanic friend, buddies)
+- Collaborative management
+
+The croozer doesn't know who owns it directly — it only knows its tender. Ownership details (shares, roles) live inside the tender.
+
 ### Generic Readings
 
 Crooz supports multiple vehicle types:
@@ -47,7 +68,7 @@ erDiagram
         text bio
     }
 
-    circles {
+    crews {
         serial id PK
         varchar name
     }
@@ -59,7 +80,7 @@ erDiagram
         text description
     }
 
-    %% Membership (polymorphic → circles, clubs)
+    %% Membership (polymorphic → crews, clubs)
     memberships {
         serial id PK
         varchar memberable_type
@@ -68,7 +89,7 @@ erDiagram
         varchar role
     }
 
-    %% Tender (polymorphic → users, circles, clubs)
+    %% Tender (polymorphic → users, crews, clubs)
     tenders {
         serial id PK
         varchar tenderable_type
@@ -217,11 +238,11 @@ erDiagram
 
     %% Relations
     users ||--o{ memberships : "has"
-    circles ||--o{ memberships : "memberable"
+    crews ||--o{ memberships : "memberable"
     clubs ||--o{ memberships : "memberable"
 
     users ||--o{ tenders : "tenderable"
-    circles ||--o{ tenders : "tenderable"
+    crews ||--o{ tenders : "tenderable"
     clubs ||--o{ tenders : "tenderable"
 
     tenders ||--o{ croozers : "owns"
