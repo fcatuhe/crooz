@@ -8,7 +8,8 @@ Crooz is a platform for car enthusiasts to share and celebrate every ride. Users
 
 ## Stack
 
-- **Ruby 4** / **Rails 8**
+- **Ruby 4.0**
+- **Rails 8.2**
 - **SQLite 3** (database)
 - **Hotwire** (Turbo + Stimulus)
 - **No-build** (vanilla CSS/JS)
