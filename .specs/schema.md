@@ -24,6 +24,7 @@ Benefits:
 - Has an entry and exit (start/end reading, dates)
 - Has duration (time spent)
 - Contains what happened (the passageable)
+- Also means "excerpt" (passage from a book) → fits with Tales
 
 Like a mountain pass 🏔️ — you enter, traverse, and exit.
 
@@ -59,9 +60,68 @@ Solution: generic `start_reading` / `end_reading` on passages, with `reading_typ
 
 ---
 
+## Schema Overview
+
+```mermaid
+flowchart TB
+    subgraph ownership[" 👥 OWNERSHIP "]
+        User
+        Club
+        Crew
+    end
+
+    subgraph tender[" 📋 TENDER "]
+        Tender
+    end
+
+    subgraph vehicle[" 🚗 VEHICLE "]
+        Croozer
+        Car
+        Motorcycle
+        Boat
+        Plane
+    end
+
+    subgraph events[" 📝 EVENTS "]
+        Passage
+    end
+
+    subgraph passageables[" ⛽🔧📖 PASSAGEABLES "]
+        Refuel
+        Service
+        Tale
+        etc[...]
+    end
+
+    User --> Tender
+    Club --> Tender
+    Crew --> Tender
+    
+    Tender --> Croozer
+    
+    Car --> Croozer
+    Motorcycle --> Croozer
+    Boat --> Croozer
+    Plane --> Croozer
+    
+    Croozer --> Passage
+    
+    Refuel --> Passage
+    Service --> Passage
+    Tale --> Passage
+    etc --> Passage
+    
+    Passage -.-> Passage
+```
+
+---
+
+## Detailed Schemas
+
+### 1. Ownership Layer
+
 ```mermaid
 erDiagram
-    %% Core entities
     users {
         serial id PK
         varchar email
@@ -74,6 +134,7 @@ erDiagram
     crews {
         serial id PK
         varchar name
+        text description
     }
 
     clubs {
@@ -83,23 +144,41 @@ erDiagram
         text description
     }
 
-    %% Membership (polymorphic → crews, clubs)
     memberships {
         serial id PK
         varchar memberable_type
         integer memberable_id FK
         integer user_id FK
         varchar role
+        decimal ownership_share
+        boolean is_owner
     }
 
-    %% Tender (polymorphic → users, crews, clubs)
     tenders {
         serial id PK
         varchar tenderable_type
         integer tenderable_id FK
     }
 
-    %% Croozer (delegated_type → cars, motorcycles, boats, planes...)
+    users ||--o{ memberships : "has"
+    crews ||--o{ memberships : "memberable"
+    clubs ||--o{ memberships : "memberable"
+
+    users ||--o{ tenders : "tenderable"
+    crews ||--o{ tenders : "tenderable"
+    clubs ||--o{ tenders : "tenderable"
+```
+
+### 2. Vehicle Layer
+
+```mermaid
+erDiagram
+    tenders {
+        serial id PK
+        varchar tenderable_type
+        integer tenderable_id FK
+    }
+
     croozers {
         serial id PK
         varchar name
@@ -113,7 +192,6 @@ erDiagram
         varchar reading_unit
     }
 
-    %% Vehicles (croozables)
     cars {
         serial id PK
         varchar make
@@ -136,7 +214,48 @@ erDiagram
         varchar style
     }
 
-    %% Passage (delegated_type → passageables, recursive parent)
+    boats {
+        serial id PK
+        varchar make
+        varchar model
+        integer year
+        varchar hin
+        varchar hull_type
+        integer length_ft
+        varchar engine
+    }
+
+    planes {
+        serial id PK
+        varchar make
+        varchar model
+        integer year
+        varchar tail_number
+        varchar aircraft_type
+        integer seats
+    }
+
+    tenders ||--o{ croozers : "owns"
+    cars ||--o{ croozers : "croozable"
+    motorcycles ||--o{ croozers : "croozable"
+    boats ||--o{ croozers : "croozable"
+    planes ||--o{ croozers : "croozable"
+```
+
+### 3. Events Layer (Passages)
+
+```mermaid
+erDiagram
+    croozers {
+        serial id PK
+        varchar name
+    }
+
+    users {
+        serial id PK
+        varchar name
+    }
+
     passages {
         serial id PK
         integer croozer_id FK
@@ -151,7 +270,21 @@ erDiagram
         varchar visibility
     }
 
-    %% Energy passageables
+    croozers ||--o{ passages : "has"
+    users ||--o{ passages : "author"
+    passages ||--o{ passages : "parent (recursive)"
+```
+
+### 4. Passageables (Energy)
+
+```mermaid
+erDiagram
+    passages {
+        serial id PK
+        varchar passageable_type
+        integer passageable_id FK
+    }
+
     refuels {
         serial id PK
         decimal liters
@@ -177,7 +310,21 @@ erDiagram
         boolean full_charge
     }
 
-    %% Maintenance passageables
+    refuels ||--o{ passages : "passageable"
+    regases ||--o{ passages : "passageable"
+    recharges ||--o{ passages : "passageable"
+```
+
+### 5. Passageables (Maintenance)
+
+```mermaid
+erDiagram
+    passages {
+        serial id PK
+        varchar passageable_type
+        integer passageable_id FK
+    }
+
     services {
         serial id PK
         text description
@@ -213,7 +360,23 @@ erDiagram
         varchar shop
     }
 
-    %% Upgrades & Stories passageables
+    services ||--o{ passages : "passageable"
+    tires ||--o{ passages : "passageable"
+    bodies ||--o{ passages : "passageable"
+    glasses ||--o{ passages : "passageable"
+    repairs ||--o{ passages : "passageable"
+```
+
+### 6. Passageables (Upgrades & Stories)
+
+```mermaid
+erDiagram
+    passages {
+        serial id PK
+        varchar passageable_type
+        integer passageable_id FK
+    }
+
     upgrades {
         serial id PK
         text description
@@ -239,35 +402,12 @@ erDiagram
         text body
     }
 
-    %% Relations
-    users ||--o{ memberships : "has"
-    crews ||--o{ memberships : "memberable"
-    clubs ||--o{ memberships : "memberable"
-
-    users ||--o{ tenders : "tenderable"
-    crews ||--o{ tenders : "tenderable"
-    clubs ||--o{ tenders : "tenderable"
-
-    tenders ||--o{ croozers : "owns"
-    cars ||--o{ croozers : "croozable"
-    motorcycles ||--o{ croozers : "croozable"
-
-    croozers ||--o{ passages : "has"
-    users ||--o{ passages : "author"
-    passages ||--o{ passages : "parent"
-
-    refuels ||--o{ passages : "passageable"
-    regases ||--o{ passages : "passageable"
-    recharges ||--o{ passages : "passageable"
-    services ||--o{ passages : "passageable"
-    tires ||--o{ passages : "passageable"
-    bodies ||--o{ passages : "passageable"
-    glasses ||--o{ passages : "passageable"
-    repairs ||--o{ passages : "passageable"
     upgrades ||--o{ passages : "passageable"
     tunes ||--o{ passages : "passageable"
     tales ||--o{ passages : "passageable"
 ```
+
+---
 
 ## Key Patterns
 
@@ -342,16 +482,20 @@ module Passageable
 end
 ```
 
+---
+
+## Reference Tables
+
 ### Reading Types
 
-| Type | Unit | Example |
+| Type | Unit | Vehicle |
 |------|------|---------|
 | odometer | km | 🚗 Car (Europe) |
 | odometer | miles | 🚗 Car (US/UK) |
 | hobbs | hours | 🛩️ Plane |
 | engine | hours | ⛵ Boat |
 
-## Passageable Types
+### Passageable Types
 
 | Category | Types |
 |----------|-------|
@@ -359,3 +503,11 @@ end
 | Maintenance | services, tires, bodies, glasses, repairs |
 | Improvements | upgrades, tunes |
 | Stories | tales |
+
+### Tender Types
+
+| Type | Pricing | Access |
+|------|---------|--------|
+| User | Free | Solo |
+| Club | Free | Open (membership) |
+| Crew | Paid | Closed (invite-only) |
