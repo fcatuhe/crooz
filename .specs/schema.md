@@ -4,16 +4,19 @@
 
 ### Delegated Type Pattern (à la 37signals)
 
-Inspired by Basecamp's Recording/Recordable pattern:
+Inspired by Basecamp's Recording/Recordable pattern. **Three core delegated types:**
 
-- **Passage** = lightweight envelope (metadata, relationships, timestamps)
-- **Passageable** = rich content (specific data and behavior per type)
+| Delegator | Delegated to | Purpose |
+|-----------|--------------|---------|
+| **Tender** | User, Club, Crew | Ownership model (who/how) |
+| **Croozer** | Car, Motorcycle, Boat, Plane... | Vehicle type (what) |
+| **Passage** | Refuel, Service, Tale... | Event type (when/what happened) |
 
 Benefits:
-- Single `passages` table for all events → unified timeline queries
-- Adding new types = just a new table, no schema changes on `passages`
-- Recordables are immutable → full history, easy versioning
-- Tree structure → passages can have children (comments on a refuel, etc.)
+- Adding new types = just a new table, no schema changes on the delegator
+- Unified queries across types
+- Tree structure on passages → children (comments on a refuel, etc.)
+- Tender encapsulates pricing/access logic per ownership model
 
 ### Vocabulary
 
@@ -24,7 +27,7 @@ Benefits:
 
 Like a mountain pass 🏔️ — you enter, traverse, and exit.
 
-### Tender (Ownership Model)
+### Tender (Ownership Model) — `delegated_type :tenderable`
 
 **Tender** = who/how a croozer is owned. Determines pricing and access model.
 
@@ -268,7 +271,36 @@ erDiagram
 
 ## Key Patterns
 
-### Passage (Recording equivalent)
+### Tender (delegated_type)
+
+```ruby
+class Tender < ApplicationRecord
+  belongs_to :croozer
+  
+  delegated_type :tenderable, types: %w[User Club Crew]
+  
+  # Pricing logic per type
+  def free? = tenderable.is_a?(User) || tenderable.is_a?(Club)
+  def paid? = tenderable.is_a?(Crew)
+end
+```
+
+### Croozer (delegated_type)
+
+```ruby
+class Croozer < ApplicationRecord
+  belongs_to :tender
+  has_many :passages
+  
+  delegated_type :croozable, types: %w[Car Motorcycle Boat Plane]
+  
+  # Reading config per vehicle type
+  attribute :reading_type  # "odometer", "engine", "hobbs"
+  attribute :reading_unit  # "km", "miles", "hours"
+end
+```
+
+### Passage (delegated_type)
 
 ```ruby
 class Passage < ApplicationRecord
