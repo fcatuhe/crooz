@@ -1,57 +1,44 @@
 # Crooz
 
-Plateforme pour passionnés d'automobile.
+A platform for car enthusiasts.
 
 ## Stack
 
-- Rails 8, Ruby, SQLite
+- Ruby 4.0
+- Rails 8.1
+- SQLite 3.47
 - Hotwire/Turbo
-- No-build (CSS/JS vanilla)
-- Kamal (deploy)
+- No-build (vanilla CSS/JS)
+- Kamal (deployment)
 
-## Getting Started
+## Getting Started (Development)
 
 ```bash
 bin/setup
+```
+
+You'll need `config/master.key` to decrypt credentials. Ask a team member for it.
+
+```bash
 bin/dev
 ```
 
-## Configuration
+## Deployment
 
 ### Required files (gitignored)
 
-These files contain sensitive data and must be created manually:
-
 #### `.env`
 
-Environment variables for Kamal deployment:
-
 ```bash
-# .env
 KAMAL_WEB_HOST=your.server.ip.address
 ```
 
-#### `config/master.key`
-
-Rails master key for credentials encryption. Generate with:
-
-```bash
-bin/rails credentials:edit
-```
-
-Or copy from a secure location if joining an existing project.
-
 #### `.infra/kamal-ansible-manager/inventory`
 
-Ansible inventory for server provisioning:
-
 ```ini
-# .infra/kamal-ansible-manager/inventory
 [webservers]
 your.server.ip.address
 ```
-
-## Deployment
 
 ### Server provisioning (first time)
 
