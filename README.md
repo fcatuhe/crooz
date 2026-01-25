@@ -1,24 +1,65 @@
-# README
+# Crooz
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Crooz Club · share and celebrate every ride.
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+- Ruby 4
+- Rails 8
+- SQLite 3
+- Hotwire/Turbo
+- No-build (vanilla CSS/JS)
+- Kamal (deployment)
 
-* System dependencies
+## Getting Started (Development)
 
-* Configuration
+```bash
+bin/setup
+```
 
-* Database creation
+You will need `config/master.key` to decrypt credentials. Ask a team member for it.
 
-* Database initialization
+```bash
+bin/dev
+```
 
-* How to run the test suite
+## Deployment
 
-* Services (job queues, cache servers, search engines, etc.)
+### Deploy
 
-* Deployment instructions
+#### Required file (gitignored)
 
-* ...
+`.env` — Kamal deployment variables:
+
+```bash
+KAMAL_WEB_HOST=your.server.ip.address
+```
+
+#### Run
+
+```bash
+bin/kamal deploy
+```
+
+### Server provisioning (first time)
+
+#### Required file (gitignored)
+
+`.infra/kamal-ansible-manager/inventory` — Ansible hosts:
+
+```ini
+[webservers]
+your.server.ip.address
+```
+
+#### Run
+
+```bash
+cd .infra/kamal-ansible-manager
+ansible-galaxy install -r requirements.yml
+ansible-playbook playbook.yml
+```
+
+## License
+
+See [LICENSE.md](LICENSE.md)
