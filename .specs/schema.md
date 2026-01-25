@@ -123,41 +123,41 @@ flowchart TB
 ```mermaid
 erDiagram
     users {
-        serial id PK
-        varchar email
-        varchar password_digest
-        varchar name
-        varchar slug
+        bigint id PK
+        string email
+        string password_digest
+        string name
+        string slug
         text bio
     }
 
     crews {
-        serial id PK
-        varchar name
+        bigint id PK
+        string name
         text description
     }
 
     clubs {
-        serial id PK
-        varchar name
-        varchar slug
+        bigint id PK
+        string name
+        string slug
         text description
     }
 
     memberships {
-        serial id PK
-        varchar memberable_type
-        integer memberable_id FK
-        integer user_id FK
-        varchar role
+        bigint id PK
+        string memberable_type
+        bigint memberable_id FK
+        bigint user_id FK
+        string role
         decimal ownership_share
         boolean is_owner
     }
 
     tenders {
-        serial id PK
-        varchar tenderable_type
-        integer tenderable_id FK
+        bigint id PK
+        string tenderable_type
+        bigint tenderable_id FK
     }
 
     users ||--o{ memberships : "has"
@@ -174,65 +174,65 @@ erDiagram
 ```mermaid
 erDiagram
     tenders {
-        serial id PK
-        varchar tenderable_type
-        integer tenderable_id FK
+        bigint id PK
+        string tenderable_type
+        bigint tenderable_id FK
     }
 
     croozers {
-        serial id PK
-        varchar name
-        varchar slug
+        bigint id PK
+        string name
+        string slug
         text bio
-        integer tender_id FK
-        varchar croozable_type
-        integer croozable_id FK
+        bigint tender_id FK
+        string croozable_type
+        bigint croozable_id FK
         date acquired_on
-        varchar reading_type
-        varchar reading_unit
+        string reading_type
+        string reading_unit
     }
 
     cars {
-        serial id PK
-        varchar make
-        varchar model
-        integer year
-        varchar vin
-        varchar body_style
-        integer doors
-        varchar engine
-        varchar transmission
+        bigint id PK
+        string make
+        string model
+        bigint year
+        string vin
+        string body_style
+        bigint doors
+        string engine
+        string transmission
     }
 
     motorcycles {
-        serial id PK
-        varchar make
-        varchar model
-        integer year
-        varchar vin
-        integer engine_cc
-        varchar style
+        bigint id PK
+        string make
+        string model
+        bigint year
+        string vin
+        bigint engine_cc
+        string style
     }
 
     boats {
-        serial id PK
-        varchar make
-        varchar model
-        integer year
-        varchar hin
-        varchar hull_type
-        integer length_ft
-        varchar engine
+        bigint id PK
+        string make
+        string model
+        bigint year
+        string hin
+        string hull_type
+        bigint length_ft
+        string engine
     }
 
     planes {
-        serial id PK
-        varchar make
-        varchar model
-        integer year
-        varchar tail_number
-        varchar aircraft_type
-        integer seats
+        bigint id PK
+        string make
+        string model
+        bigint year
+        string tail_number
+        string aircraft_type
+        bigint seats
     }
 
     tenders ||--o{ croozers : "owns"
@@ -247,27 +247,27 @@ erDiagram
 ```mermaid
 erDiagram
     croozers {
-        serial id PK
-        varchar name
+        bigint id PK
+        string name
     }
 
     users {
-        serial id PK
-        varchar name
+        bigint id PK
+        string name
     }
 
     passages {
-        serial id PK
-        integer croozer_id FK
-        integer parent_id FK
-        integer author_id FK
-        varchar passageable_type
-        integer passageable_id FK
+        bigint id PK
+        bigint croozer_id FK
+        bigint parent_id FK
+        bigint author_id FK
+        string passageable_type
+        bigint passageable_id FK
         date started_on
         date ended_on
         decimal start_reading
         decimal end_reading
-        varchar visibility
+        string visibility
     }
 
     croozers ||--o{ passages : "has"
@@ -280,33 +280,33 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        serial id PK
-        varchar passageable_type
-        integer passageable_id FK
+        bigint id PK
+        string passageable_type
+        bigint passageable_id FK
     }
 
     refuels {
-        serial id PK
+        bigint id PK
         decimal liters
-        integer price_cents
-        varchar fuel_type
+        bigint price_cents
+        string fuel_type
         boolean full_tank
     }
 
     regases {
-        serial id PK
+        bigint id PK
         decimal kilograms
-        integer price_cents
-        varchar gas_type
+        bigint price_cents
+        string gas_type
         boolean full_tank
     }
 
     recharges {
-        serial id PK
+        bigint id PK
         decimal kwh
-        integer price_cents
-        varchar charge_type
-        integer duration_minutes
+        bigint price_cents
+        string charge_type
+        bigint duration_minutes
         boolean full_charge
     }
 
@@ -320,44 +320,44 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        serial id PK
-        varchar passageable_type
-        integer passageable_id FK
+        bigint id PK
+        string passageable_type
+        bigint passageable_id FK
     }
 
     services {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
+        bigint cost_cents
+        string shop
     }
 
     tires {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
+        bigint cost_cents
+        string shop
     }
 
     bodies {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
+        bigint cost_cents
+        string shop
     }
 
     glasses {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
+        bigint cost_cents
+        string shop
     }
 
     repairs {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
+        bigint cost_cents
+        string shop
     }
 
     services ||--o{ passages : "passageable"
@@ -372,33 +372,33 @@ erDiagram
 ```mermaid
 erDiagram
     passages {
-        serial id PK
-        varchar passageable_type
-        integer passageable_id FK
+        bigint id PK
+        string passageable_type
+        bigint passageable_id FK
     }
 
     upgrades {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
-        varchar category
+        bigint cost_cents
+        string shop
+        string category
     }
 
     tunes {
-        serial id PK
+        bigint id PK
         text description
-        integer cost_cents
-        varchar shop
-        integer stage
-        integer power_gain_hp
-        integer torque_gain_nm
+        bigint cost_cents
+        string shop
+        bigint stage
+        bigint power_gain_hp
+        bigint torque_gain_nm
     }
 
     tales {
-        serial id PK
-        varchar title
-        varchar slug
+        bigint id PK
+        string title
+        string slug
         text body
     }
 
