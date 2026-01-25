@@ -24,6 +24,35 @@
   </head>
 
   <body>
+    <header>
+      <% if current_user %>
+        <nav>
+          <%= link_to "Timeline", timeline_path %>
+          <% if current_user.croozer %>
+            <%= link_to "Garage", croozer_path(current_user.croozer) %>
+            <%= link_to "Refuels", croozer_refuels_path(current_user.croozer) %>
+            <%= link_to "Tales", croozer_tales_path(current_user.croozer) %>
+          <% else %>
+            <%= link_to "Add car", new_croozer_path %>
+          <% end %>
+          <%= button_to "Sign out", session_path, method: :delete %>
+        </nav>
+      <% else %>
+        <nav>
+          <%= link_to "Sign in", new_session_path %>
+          <%= link_to "Sign up", new_signup_path %>
+        </nav>
+      <% end %>
+    </header>
+
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <p><%= flash[:alert] %></p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

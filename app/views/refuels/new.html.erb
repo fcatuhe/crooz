@@ -1,0 +1,27 @@
+<h1>Log a refuel</h1>
+
+<%= form_with url: croozer_refuels_path(@croozer), scope: nil do %>
+  <%= fields_for :passage, @passage do |passage_fields| %>
+    <%= passage_fields.label :started_on, "Date" %><br>
+    <%= passage_fields.date_field :started_on, required: true %><br>
+
+    <%= passage_fields.label :start_reading, "Odometer" %><br>
+    <%= passage_fields.number_field :start_reading, step: 0.1, required: true %><br>
+  <% end %>
+
+  <%= fields_for :refuel, @refuel do |refuel_fields| %>
+    <%= refuel_fields.label :liters %><br>
+    <%= refuel_fields.number_field :liters, step: 0.01, required: true %><br>
+
+    <%= refuel_fields.label :price_cents, "Price (cents)" %><br>
+    <%= refuel_fields.number_field :price_cents, step: 1 %><br>
+
+    <%= refuel_fields.label :fuel_type %><br>
+    <%= refuel_fields.text_field :fuel_type %><br>
+
+    <%= refuel_fields.label :full_tank %>
+    <%= refuel_fields.check_box :full_tank %>
+  <% end %>
+
+  <%= submit_tag "Save refuel" %>
+<% end %>

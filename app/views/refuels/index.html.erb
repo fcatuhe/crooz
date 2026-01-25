@@ -1,0 +1,19 @@
+<h1>Refuels</h1>
+
+<p><%= link_to "Log a refuel", new_croozer_refuel_path(@croozer) %></p>
+
+<% if @passages.any? %>
+  <ul>
+    <% @passages.each do |passage| %>
+      <% refuel = passage.passageable %>
+      <li>
+        <strong><%= passage.started_on %></strong> — <%= refuel.liters %> L
+        <% if refuel.consumption %>
+          (<%= number_with_precision(refuel.consumption, precision: 2) %> L/100km)
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No refuels logged yet.</p>
+<% end %>

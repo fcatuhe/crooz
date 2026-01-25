@@ -1,0 +1,7 @@
+<h1><%= @tale.title %></h1>
+
+<% if @tale.passage %>
+  <p><strong>Date:</strong> <%= @tale.passage.started_on %></p>
+<% end %>
+
+<p><%= simple_format(@tale.body) %></p>

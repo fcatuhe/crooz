@@ -1,0 +1,35 @@
+<h1><%= @croozer.name %></h1>
+
+<p>
+  <strong>Average consumption:</strong>
+  <% if @average_consumption %>
+    <%= number_with_precision(@average_consumption, precision: 2) %> L/100km
+  <% else %>
+    Not enough data yet.
+  <% end %>
+</p>
+
+<h2>Recent passages</h2>
+<% if @recent_passages.any? %>
+  <ul>
+    <% @recent_passages.each do |passage| %>
+      <% if passage.passageable.is_a?(Refuel) %>
+        <% refuel = passage.passageable %>
+        <li>
+          <strong>Refuel</strong> on <%= passage.started_on %> — <%= refuel.liters %> L
+          <% if refuel.consumption %>
+            (<%= number_with_precision(refuel.consumption, precision: 2) %> L/100km)
+          <% end %>
+        </li>
+      <% elsif passage.passageable.is_a?(Tale) %>
+        <% tale = passage.passageable %>
+        <li>
+          <strong>Tale</strong> on <%= passage.started_on %> —
+          <%= link_to tale.title, croozer_tale_path(@croozer, tale) %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No passages yet.</p>
+<% end %>

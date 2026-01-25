@@ -1,0 +1,17 @@
+<h1>Tales</h1>
+
+<p><%= link_to "Write a tale", new_croozer_tale_path(@croozer) %></p>
+
+<% if @passages.any? %>
+  <ul>
+    <% @passages.each do |passage| %>
+      <% tale = passage.passageable %>
+      <li>
+        <strong><%= passage.started_on %></strong> —
+        <%= link_to tale.title, croozer_tale_path(@croozer, tale) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No tales yet.</p>
+<% end %>

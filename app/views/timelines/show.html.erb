@@ -1,0 +1,27 @@
+<h1>Timeline</h1>
+
+<% if @croozer %>
+  <% if @passages.any? %>
+    <ul>
+      <% @passages.each do |passage| %>
+        <% if passage.passageable.is_a?(Refuel) %>
+          <% refuel = passage.passageable %>
+          <li>
+            <strong>Refuel</strong> on <%= passage.started_on %> — <%= refuel.liters %> L
+            <% if refuel.consumption %>
+              (<%= number_with_precision(refuel.consumption, precision: 2) %> L/100km)
+            <% end %>
+          </li>
+        <% elsif passage.passageable.is_a?(Tale) %>
+          <% tale = passage.passageable %>
+          <li>
+            <strong>Tale</strong> on <%= passage.started_on %> —
+            <%= link_to tale.title, croozer_tale_path(@croozer, tale) %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No passages yet. Start by logging a refuel or writing a tale.</p>
+  <% end %>
+<% end %>

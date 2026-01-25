@@ -1,0 +1,33 @@
+<h1>Add your car</h1>
+
+<%= form_with url: croozers_path, scope: nil do %>
+  <fieldset>
+    <legend>Garage details</legend>
+    <%= fields_for :croozer, @croozer do |croozer_fields| %>
+      <%= croozer_fields.label :name, "Car name" %><br>
+      <%= croozer_fields.text_field :name, required: true, placeholder: "My GTI" %><br>
+
+      <%= croozer_fields.label :reading_type %><br>
+      <%= croozer_fields.select :reading_type, [["Odometer", "odometer"]], selected: @croozer.reading_type || "odometer" %><br>
+
+      <%= croozer_fields.label :reading_unit %><br>
+      <%= croozer_fields.select :reading_unit, [["Kilometers", "km"]], selected: @croozer.reading_unit || "km" %><br>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <legend>Car details</legend>
+    <%= fields_for :car, @car do |car_fields| %>
+      <%= car_fields.label :make %><br>
+      <%= car_fields.text_field :make, required: true %><br>
+
+      <%= car_fields.label :model %><br>
+      <%= car_fields.text_field :model, required: true %><br>
+
+      <%= car_fields.label :year %><br>
+      <%= car_fields.number_field :year, required: true, min: 1900 %><br>
+    <% end %>
+  </fieldset>
+
+  <%= submit_tag "Save car" %>
+<% end %>

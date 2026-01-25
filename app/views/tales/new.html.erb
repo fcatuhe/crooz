@@ -1,0 +1,18 @@
+<h1>Write a tale</h1>
+
+<%= form_with url: croozer_tales_path(@croozer), scope: nil do %>
+  <%= fields_for :passage, @passage do |passage_fields| %>
+    <%= passage_fields.label :started_on, "Date" %><br>
+    <%= passage_fields.date_field :started_on, required: true %><br>
+  <% end %>
+
+  <%= fields_for :tale, @tale do |tale_fields| %>
+    <%= tale_fields.label :title %><br>
+    <%= tale_fields.text_field :title, required: true %><br>
+
+    <%= tale_fields.label :body %><br>
+    <%= tale_fields.text_area :body, rows: 10 %><br>
+  <% end %>
+
+  <%= submit_tag "Publish tale" %>
+<% end %>

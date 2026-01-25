@@ -26,8 +26,15 @@ Crooz is a platform for car enthusiasts to share and celebrate every ride. Users
 ### Setup and Server
 ```bash
 bin/setup              # Initial setup (installs gems, creates DB, loads schema)
-bin/dev                # Start development server
+bin/dev                # Start development server (localhost:4002)
+bin/dev --tailscale    # Start with Tailscale HTTPS (port 64002)
 ```
+
+### Tailscale Access
+When running `bin/dev --tailscale`, the app is available at:
+- **https://azade.airplane-catfish.ts.net:64002**
+
+This uses `tailscale serve` to expose the local server via HTTPS.
 
 ### Testing
 ```bash
