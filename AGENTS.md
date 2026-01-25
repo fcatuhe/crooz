@@ -11,9 +11,14 @@ Crooz is a platform for car enthusiasts to share and celebrate every ride. Users
 - **Ruby 4** / **Rails 8**
 - **SQLite 3** (database)
 - **Hotwire** (Turbo + Stimulus)
-- **No-build** — vanilla CSS and JS, no bundler, no transpiler
+- **Importmap** (no bundler)
+- **No-build** — vanilla CSS and JS
+- **Solid Trifecta**:
+  - SolidQueue (background jobs)
+  - SolidCable (WebSockets)
+  - SolidCache (caching)
 - **Kamal** (deployment)
-- **SolidQueue** (background jobs)
+- **Propshaft** (asset pipeline)
 
 ## Development Commands
 
