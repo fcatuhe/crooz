@@ -14,7 +14,10 @@ Crooz is a platform for car enthusiasts to share and celebrate every ride. Users
 - **No-build** (vanilla CSS/JS)
 - **Importmap**
 - **Propshaft**
-- **Solid Trifecta** — SolidQueue (jobs), SolidCable (WebSockets), SolidCache (cache)
+- **Solid Trifecta**:
+  - SolidQueue (background jobs)
+  - SolidCable (WebSockets)
+  - SolidCache (caching)
 - **Kamal**
 
 ## Development Commands
