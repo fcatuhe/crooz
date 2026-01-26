@@ -52,6 +52,7 @@ bin/rails g authentication
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Safe by default: no destructive ops (`reset --hard`, `clean`, `rm`) without consent.
 - Keep edits small/reviewable.
+- Never commit/push without explicit user request; permission applies to next command only.
 
 ## GitHub CLI
 
