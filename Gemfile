@@ -57,6 +57,10 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Development
+  gem "herb", require: false
+  gem "reactionview"
 end
 
 group :test do
