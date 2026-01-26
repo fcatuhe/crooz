@@ -35,8 +35,5 @@
 /config/credentials/*.key
 !/config/credentials/test.key
 
-# Ignore Overmind local environment file
-.overmind.env
-
 # Ignore MacOS Desktop Services Store files
 .DS_Store
