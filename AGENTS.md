@@ -73,6 +73,7 @@ New deps: quick health check (recent commits, adoption, maintenance).
 
 Avoid "AI slop" UI. Be opinionated + distinctive.
 
+- No inline `style` attributes in HTML; use utility classes instead.
 - Typography: pick a real font; avoid system defaults.
 - Theme: commit to a palette; use CSS vars.
 - Motion: 1-2 high-impact moments, not random micro-anim.
