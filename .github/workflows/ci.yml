@@ -39,7 +39,7 @@ jobs:
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
-  lint:
+  lint_ruby:
     runs-on: ubuntu-24.04-arm
     env:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
@@ -64,6 +64,14 @@ jobs:
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
+
+  lint_herb:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run Herb Linter
+        run: npx @herb-tools/linter
 
   test:
     runs-on: ubuntu-24.04-arm
