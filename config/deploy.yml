@@ -84,16 +84,9 @@ asset_path: /rails/public/assets
 # Configure the image builder.
 builder:
   arch: arm64
-
-  # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
-  # remote: ssh://docker@docker-builder-server
-  #
-  # # Pass arguments and secrets to the Docker build process
-  # args:
-  #   RUBY_VERSION: ruby-4.0.0
-  # secrets:
-  #   - GITHUB_TOKEN
-  #   - RAILS_MASTER_KEY
+  cache:
+    type: gha
+    options: mode=max
 
 # Use a different ssh user than root
 # ssh:
