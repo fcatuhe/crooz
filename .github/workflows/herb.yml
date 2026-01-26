@@ -1,0 +1,11 @@
+name: Herb Lint
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Run Herb Linter
+        run: npx @herb-tools/linter
