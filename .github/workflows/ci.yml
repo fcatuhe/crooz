@@ -6,8 +6,8 @@ on:
     branches: [ main ]
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   scan_ruby:
@@ -143,7 +143,7 @@ jobs:
     concurrency:
       group: deploy-production
       cancel-in-progress: false
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
