@@ -1,62 +1,79 @@
 # Crooz
 
-This file provides guidance to AI coding agents working with this repository.
-
-## What is Crooz?
-
-Crooz is a platform for car enthusiasts to share and celebrate every ride. Users can track their vehicles, log fuel consumption, maintenance, and write stories about their rides.
+Platform for car enthusiasts. Track vehicles, log fuel/maintenance, write ride stories.
 
 ## Stack
 
-- **Ruby 4.0**
-- **Rails 8.2**
-- **SQLite 3** (database)
-- **Hotwire** (Turbo + Stimulus)
-- **No-build** (vanilla CSS/JS)
-- **Importmap** (no bundler)
-- **Propshaft** (asset pipeline)
-- **Solid Trifecta**:
-  - SolidQueue (background jobs)
-  - SolidCable (WebSockets)
-  - SolidCache (caching)
-- **Kamal** (deployment)
+Ruby 4.0, Rails 8.2, SQLite 3, Hotwire (Turbo + Stimulus), vanilla CSS/JS, Importmap, Propshaft, Solid Trifecta (Queue/Cable/Cache), Kamal.
 
-## Development Commands
-
-### Setup and Server
-```bash
-bin/setup              # Initial setup (installs gems, creates DB, loads schema)
-bin/dev                # Start development server
-```
-
-### Testing
-```bash
-bin/rails test                         # Run unit tests
-bin/rails test test/path/file_test.rb  # Run single test file
-bin/rails test:system                  # Run system tests
-bin/ci                                 # Run full CI suite
-```
-
-### Database
-```bash
-bin/rails db:fixtures:load   # Load fixture data
-bin/rails db:migrate         # Run migrations
-bin/rails db:reset           # Drop, create, and load schema
-```
-
-## Rails Generators
-
-**Always prefer Rails generators** for creating new code:
+## Commands
 
 ```bash
-bin/rails generate model Refuel liters:decimal price_cents:integer
-bin/rails generate controller Passages index show
-bin/rails generate migration AddStartReadingToPassages start_reading:decimal
-bin/rails generate authentication  # Rails 8 authentication
+bin/setup              # Initial setup
+bin/dev                # Dev server
+bin/rails test         # Unit tests
+bin/rails test:system  # System tests
+bin/ci                 # Full CI suite
 ```
 
-Generators ensure consistency and create associated test files.
+## Generators
 
-## Coding style
+Prefer Rails generators:
+
+```bash
+bin/rails g model Refuel liters:decimal price_cents:integer
+bin/rails g controller Passages index show
+bin/rails g migration AddStartReadingToPassages start_reading:decimal
+bin/rails g authentication
+```
+
+## Style
 
 @STYLE.md
+
+## Code
+
+- No comments. If needed, use Rails notes (`bin/rails notes`):
+  - `TODO:` / `FIXME:` / `OPTIMIZE:`
+  - Format: `# TODO: FC 26jan26 description`
+- Files < 500 LOC; split if needed.
+- Bugs: add regression test.
+
+## Critical Thinking
+
+- Fix root cause (not band-aid).
+- Unsure: read more code; if still stuck, ask w/ short options.
+- Conflicts: call out; pick safer path.
+- Unrecognized changes: assume other agent; keep going; focus your changes. If it causes issues, stop + ask user.
+- Leave breadcrumb notes in thread.
+
+## Git
+
+- Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
+- Safe by default: no destructive ops (`reset --hard`, `clean`, `rm`) without consent.
+- Keep edits small/reviewable.
+
+## GitHub CLI
+
+- PRs: use `gh pr view/diff` (no URLs).
+- CI: `gh run list/view`, rerun/fix til green.
+- PR comments: `gh pr view` + `gh api .../comments --paginate`.
+- Given issue/PR URL: use `gh`, not web search.
+
+## CI
+
+- Before handoff: run full gate (`bin/ci`).
+- CI red: fix, push, repeat til green.
+
+## Dependencies
+
+New deps: quick health check (recent commits, adoption, maintenance).
+
+## Frontend
+
+Avoid "AI slop" UI. Be opinionated + distinctive.
+
+- Typography: pick a real font; avoid system defaults.
+- Theme: commit to a palette; use CSS vars.
+- Motion: 1-2 high-impact moments, not random micro-anim.
+- Avoid: purple-on-white clichés, generic grids, predictable layouts.
