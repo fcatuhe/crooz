@@ -1,0 +1,179 @@
+@layer reset, base, components, modules, utilities, native, platform;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Special+Elite&display=swap');
+
+:root {
+  /* Fonts */
+  --font-display: "Special Elite", ui-serif, serif;
+  --font-sans: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* Spacing */
+  --inline-space: 1ch;
+  --inline-space-half: calc(var(--inline-space) / 2);
+  --inline-space-double: calc(var(--inline-space) * 2);
+  --block-space: 1rem;
+  --block-space-half: calc(var(--block-space) / 2);
+  --block-space-double: calc(var(--block-space) * 2);
+
+  /* Text sizes */
+  --text-xx-small: 0.55rem;
+  --text-x-small: 0.75rem;
+  --text-small: 0.85rem;
+  --text-normal: 1rem;
+  --text-medium: 1.1rem;
+  --text-large: 1.5rem;
+  --text-x-large: 1.8rem;
+  --text-xx-large: 2.5rem;
+
+  @media (max-width: 639px) {
+    --text-xx-small: 0.65rem;
+    --text-x-small: 0.85rem;
+    --text-small: 0.95rem;
+    --text-normal: 1.1rem;
+    --text-medium: 1.2rem;
+    --text-large: 1.5rem;
+    --text-x-large: 1.8rem;
+    --text-xx-large: 2.5rem;
+  }
+
+  /* Crooz palette - OKLCH */
+  --lch-paper: 98% 0.005 78;
+  --lch-ink: 21.6% 0.006 56;
+  --lch-graphite: 44.4% 0.01 74;
+  --lch-dust: 92.3% 0.003 49;
+  --lch-asphalt: 26.8% 0.006 34;
+  /* Amber scale (hue 58) */
+  --lch-amber-darkest: 26% 0.08 58;
+  --lch-amber-darker: 40% 0.12 58;
+  --lch-amber-dark: 55% 0.14 58;
+  --lch-amber-medium: 66.6% 0.157 58;
+  --lch-amber-light: 80% 0.1 58;
+  --lch-amber-lighter: 90% 0.06 58;
+  --lch-amber-lightest: 96.2% 0.058 96;
+  /* Petrol scale (hue 186) */
+  --lch-petrol-darkest: 26% 0.06 186;
+  --lch-petrol-darker: 38% 0.07 186;
+  --lch-petrol-dark: 51.1% 0.086 186;
+  --lch-petrol-medium: 60% 0.08 186;
+  --lch-petrol-light: 75% 0.06 186;
+  --lch-petrol-lighter: 88% 0.035 186;
+  --lch-petrol-lightest: 95% 0.015 186;
+
+  /* Colors: Named */
+  --color-paper: oklch(var(--lch-paper));
+  --color-ink: oklch(var(--lch-ink));
+  --color-graphite: oklch(var(--lch-graphite));
+  --color-dust: oklch(var(--lch-dust));
+  --color-asphalt: oklch(var(--lch-asphalt));
+  /* Amber colors */
+  --color-amber: oklch(var(--lch-amber-medium));
+  --color-amber-darkest: oklch(var(--lch-amber-darkest));
+  --color-amber-darker: oklch(var(--lch-amber-darker));
+  --color-amber-dark: oklch(var(--lch-amber-dark));
+  --color-amber-medium: oklch(var(--lch-amber-medium));
+  --color-amber-light: oklch(var(--lch-amber-light));
+  --color-amber-lighter: oklch(var(--lch-amber-lighter));
+  --color-amber-lightest: oklch(var(--lch-amber-lightest));
+  /* Petrol colors */
+  --color-petrol: oklch(var(--lch-petrol-dark));
+  --color-petrol-darkest: oklch(var(--lch-petrol-darkest));
+  --color-petrol-darker: oklch(var(--lch-petrol-darker));
+  --color-petrol-dark: oklch(var(--lch-petrol-dark));
+  --color-petrol-medium: oklch(var(--lch-petrol-medium));
+  --color-petrol-light: oklch(var(--lch-petrol-light));
+  --color-petrol-lighter: oklch(var(--lch-petrol-lighter));
+  --color-petrol-lightest: oklch(var(--lch-petrol-lightest));
+
+  /* Colors: Semantic (mapped to Fizzy conventions) */
+  --color-canvas: var(--color-paper);
+  --color-ink-inverted: var(--color-paper);
+  --color-ink-darkest: var(--color-ink);
+  --color-ink-darker: var(--color-asphalt);
+  --color-ink-dark: var(--color-graphite);
+  --color-ink-medium: oklch(55% 0.008 60);
+  --color-ink-light: oklch(75% 0.005 70);
+  --color-ink-lighter: var(--color-dust);
+  --color-ink-lightest: oklch(95% 0.003 80);
+
+  /* Colors: Abstractions */
+  --color-link: var(--color-petrol);
+  --color-accent: var(--color-amber);
+  --color-positive: oklch(55% 0.162 147);
+  --color-negative: oklch(59% 0.19 38);
+  --color-highlight: var(--color-amber-light);
+  --color-selected: oklch(var(--lch-amber-medium) / 20%);
+  --color-selected-light: oklch(var(--lch-amber-medium) / 10%);
+  --color-selected-dark: oklch(var(--lch-amber-medium) / 30%);
+  --color-marker: var(--color-negative);
+
+  /* Borders */
+  --border: 1px solid var(--color-dust);
+
+  /* Shadows */
+  --shadow: 0 0 0 1px oklch(var(--lch-ink) / 5%),
+            0 0.2em 0.2em oklch(var(--lch-ink) / 5%),
+            0 0.4em 0.4em oklch(var(--lch-ink) / 5%),
+            0 0.8em 0.8em oklch(var(--lch-ink) / 5%);
+
+  /* Components */
+  --btn-size: 2.65em;
+  --footer-height: 2.65rem;
+
+  /* Focus rings */
+  --focus-ring-color: var(--color-amber);
+  --focus-ring-offset: 1px;
+  --focus-ring-size: 2px;
+  --focus-ring: var(--focus-ring-size) solid var(--focus-ring-color);
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-overshoot: cubic-bezier(0.25, 1.75, 0.5, 1);
+
+  /* Layout */
+  --main-padding: clamp(var(--inline-space), 3vw, calc(var(--inline-space) * 3));
+  --main-width: 1200px;
+
+  /* Z-index */
+  --z-popup: 10;
+  --z-nav: 20;
+  --z-flash: 30;
+  --z-tooltip: 40;
+}
+
+/* Dark mode */
+html[data-theme="dark"] {
+  --lch-paper: 26.8% 0.006 34;
+  --lch-ink: 98% 0.005 78;
+  --lch-graphite: 75% 0.008 70;
+  --lch-dust: 35% 0.005 50;
+  --lch-asphalt: 18% 0.004 30;
+
+  --color-ink-inverted: oklch(var(--lch-asphalt));
+  --color-ink-medium: oklch(60% 0.006 60);
+  --color-ink-light: oklch(45% 0.005 55);
+  --color-ink-lightest: oklch(30% 0.004 45);
+
+  --shadow: 0 0 0 1px oklch(0% 0 0 / 30%),
+            0 0.2em 0.4em oklch(0% 0 0 / 20%),
+            0 0.4em 0.8em oklch(0% 0 0 / 15%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --lch-paper: 26.8% 0.006 34;
+    --lch-ink: 98% 0.005 78;
+    --lch-graphite: 75% 0.008 70;
+    --lch-dust: 35% 0.005 50;
+    --lch-asphalt: 18% 0.004 30;
+
+    --color-ink-inverted: oklch(var(--lch-asphalt));
+    --color-ink-medium: oklch(60% 0.006 60);
+    --color-ink-light: oklch(45% 0.005 55);
+    --color-ink-lightest: oklch(30% 0.004 45);
+
+    --shadow: 0 0 0 1px oklch(0% 0 0 / 30%),
+              0 0.2em 0.4em oklch(0% 0 0 / 20%),
+              0 0.4em 0.8em oklch(0% 0 0 / 15%);
+  }
+}
