@@ -30,24 +30,75 @@ Like a mountain pass 🏔️ — you enter, traverse, and exit.
 
 ### Tender (Ownership Model) — `delegated_type :tenderable`
 
-**Tender** = who/how a croozer is owned. Determines pricing and access model.
+**Tender** = **who** owns a Croozer. Not where, not how — **who**.
 
-| Tender | Pricing | Access | Use case |
-|--------|---------|--------|----------|
-| **User** | Free | Solo | My personal car |
-| **Club** | Free | Open (membership) | Non-profit car club, association |
-| **Crew** | Paid 💰 | Closed (invite-only) | Co-ownership, private stable |
+| Type | What it is | Pricing | Access |
+|------|------------|---------|--------|
+| **User** | One person, their personal garage | Free | Solo |
+| **Club** | Association, open membership | Free | Open |
+| **Crew** | Co-ownership, invite-only | Paid 💰 | Closed |
 
-**Club** = open to all, join via membership (public adhésion)
-**Crew** = private, invite-only
+#### Why User is a tenderable
 
-**Crew features (premium):**
+A User serves two roles:
+1. **Authentication** — account, sessions, password
+2. **Ownership type** — when they own a Croozer solo
+
+This avoids creating an empty "Solo" or "Personal" model. User IS the solo ownership type.
+
+#### Concrete examples
+
+| Scenario | Tender type | Result |
+|----------|-------------|--------|
+| François owns his MX-5 alone | `Tender(User)` | His personal garage |
+| Miata Club Bordeaux has shared cars | `Tender(Club)` | Club fleet |
+| François + Raph co-own a 205 GTI | `Tender(Crew)` | Shared ownership |
+
+#### Multi-tender access
+
+A User can access multiple tenders:
+- **Their own tender** (1 max) — via `has_one :tender, as: :tenderable`
+- **Club/Crew tenders** (N) — via `tender_memberships`
+
+```ruby
+class User < ApplicationRecord
+  # Auth
+  has_secure_password
+  has_many :sessions
+  
+  # My personal garage (I am the tenderable)
+  has_one :tender, as: :tenderable
+  
+  # Clubs and Crews I'm part of
+  has_many :tender_memberships
+  has_many :shared_tenders, through: :tender_memberships, source: :tender
+  
+  # All my croozers (personal + shared)
+  def all_croozers
+    Croozer.where(tender: [tender, *shared_tenders].compact)
+  end
+end
+```
+
+#### Club vs Crew
+
+| | Club | Crew |
+|---|------|------|
+| Join | Open (request/auto) | Invite only |
+| Ownership | No shares | Shares (50/50, 70/30...) |
+| Pricing | Free | Paid 💰 |
+| Use case | Car meets, associations | Co-ownership, family car |
+
+**Crew premium features:**
 - Ownership shares (50/50, 70/30...)
 - Roles per member (mechanic, driver, detailer...)
-- Invite non-owners (mechanic friend, buddies)
-- Collaborative management
+- Invite non-owners (mechanic friend)
+- Expense splitting
 
-The croozer doesn't know who owns it directly — it only knows its tender. Ownership details (shares, roles) live inside the tender.
+#### Key insight
+
+The Croozer doesn't know who owns it directly — it only knows its Tender. 
+Ownership details (who, shares, roles) live in the tenderable (User/Club/Crew) and memberships.
 
 ### Generic Readings
 
@@ -144,30 +195,31 @@ erDiagram
         text description
     }
 
-    memberships {
-        bigint id
-        string memberable_type
-        bigint memberable_id
-        bigint user_id
-        string role
-        decimal ownership_share
-        boolean is_owner
-    }
-
     tenders {
         bigint id
         string tenderable_type
         bigint tenderable_id
     }
 
-    users ||--o{ memberships : "has"
-    crews ||--o{ memberships : "memberable"
-    clubs ||--o{ memberships : "memberable"
+    tender_memberships {
+        bigint id
+        bigint user_id
+        bigint tender_id
+        integer role
+        decimal ownership_share
+    }
 
-    users ||--o{ tenders : "tenderable"
-    crews ||--o{ tenders : "tenderable"
-    clubs ||--o{ tenders : "tenderable"
+    users ||--|| tenders : "tenderable (personal garage)"
+    crews ||--|| tenders : "tenderable"
+    clubs ||--|| tenders : "tenderable"
+
+    users ||--o{ tender_memberships : "member of clubs/crews"
+    tenders ||--o{ tender_memberships : "has members"
 ```
+
+**Note:** A User has TWO paths to Croozers:
+1. Direct: `user.tender.croozers` (their personal garage, User is tenderable)
+2. Via membership: `user.shared_tenders.flat_map(&:croozers)` (clubs/crews)
 
 ### 2. Vehicle Layer
 
@@ -415,13 +467,21 @@ erDiagram
 
 ```ruby
 class Tender < ApplicationRecord
-  belongs_to :croozer
-  
   delegated_type :tenderable, types: %w[User Club Crew]
+  
+  has_many :croozers, dependent: :destroy
+  has_many :memberships, class_name: "TenderMembership"
   
   # Pricing logic per type
   def free? = tenderable.is_a?(User) || tenderable.is_a?(Club)
   def paid? = tenderable.is_a?(Crew)
+end
+
+class TenderMembership < ApplicationRecord
+  belongs_to :user
+  belongs_to :tender
+  
+  enum :role, { member: 0, admin: 1, owner: 2 }
 end
 ```
 
