@@ -10,4 +10,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   root "pages#home"
+
+  resource :session
+  resources :passwords, param: :token
 end
