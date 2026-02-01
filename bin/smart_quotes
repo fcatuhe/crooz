@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/tasks/smart_quotes/linter"
+
+case ARGV[0]
+when "find", nil
+  exit SmartQuotes::Linter.new.find
+when "replace"
+  SmartQuotes::Linter.new.replace
+else
+  puts "Usage: bin/smart_quotes [find|replace]"
+  exit 1
+end
