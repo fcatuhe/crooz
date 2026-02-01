@@ -78,6 +78,19 @@ jobs:
       - name: Run Herb Linter
         run: npx @herb-tools/linter
 
+  lint_smart_quotes:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Check for smart quotes
+        run: bin/smart_quotes
+
   test:
     runs-on: ubuntu-24.04-arm
 
@@ -139,7 +152,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-24.04-arm
-    needs: [scan_ruby, scan_js, lint_ruby, lint_herb, test, system-test]
+    needs: [scan_ruby, scan_js, lint_ruby, lint_herb, lint_smart_quotes, test, system-test]
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     concurrency:
       group: deploy-production
