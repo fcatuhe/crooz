@@ -94,7 +94,7 @@ jobs:
           bundler-cache: true
 
       - name: Check for smart quotes
-        run: bin/smart_quotes
+        run: bin/smart_quotes find
 
   test:
     name: Test

@@ -1,5 +1,5 @@
-module SmartQuotes
-  class Linter
+module Linters
+  class SmartQuotes
     SMART_QUOTES = {
       "\u2018" => { replace: "'", name: "left single quote" },
       "\u2019" => { replace: "'", name: "right single quote" },
@@ -19,7 +19,7 @@ module SmartQuotes
       storage/**/*
       tmp/**/*
       vendor/**/*
-      lib/tasks/smart_quotes/**/*
+      lib/linters/**/*
     ].freeze
 
     COLORS = { red: "\e[31m", green: "\e[32m", cyan: "\e[36m", reset: "\e[0m" }.freeze
@@ -135,15 +135,11 @@ module SmartQuotes
         end
 
         puts "#{pluralize(files.size, 'file')} inspected, #{COLORS[:red]}#{pluralize(count, 'offense')}#{COLORS[:reset]} detected"
-        puts "\nTo fix these offenses, run:\n\n  #{replace_command}\n\n"
+        puts "\nTo fix these offenses, run:\n\n  bin/smart_quotes replace\n\n"
       end
 
       def pluralize(count, singular)
         count == 1 ? "#{count} #{singular}" : "#{count} #{singular}s"
-      end
-
-      def replace_command
-        $0.include?("rails") ? "bin/rails smart_quotes:replace" : "bin/smart_quotes replace"
       end
   end
 end
