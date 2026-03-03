@@ -1,0 +1,3 @@
+[submodule ".infra/vps-ansible/vps-ansible"]
+	path = .infra/vps-ansible/vps-ansible
+	url = https://github.com/fcatuhe/vps-ansible.git
