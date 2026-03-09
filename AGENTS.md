@@ -1,3 +1,6 @@
+READ ../garde-rails/RAILS.md BEFORE ANYTHING.
+If missing: git clone https://github.com/fcatuhe/garde-rails.git ../garde-rails
+
 # Crooz
 
 Platform for car enthusiasts. Track vehicles, log fuel/maintenance, write ride stories.
@@ -26,10 +29,6 @@ bin/rails g controller Passages index show
 bin/rails g migration AddStartReadingToPassages start_reading:decimal
 bin/rails g authentication
 ```
-
-## Style
-
-@STYLE.md
 
 ## Code
 
