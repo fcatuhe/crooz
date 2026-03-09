@@ -1,3 +1,6 @@
+READ ../garde-rails/RAILS.md BEFORE ANYTHING.
+If missing: git clone https://github.com/fcatuhe/garde-rails.git ../garde-rails
+
 # Crooz
 
 Platform for car enthusiasts. Track vehicles, log fuel/maintenance, write ride stories.
