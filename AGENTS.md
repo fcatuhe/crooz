@@ -30,10 +30,6 @@ bin/rails g migration AddStartReadingToPassages start_reading:decimal
 bin/rails g authentication
 ```
 
-## Style
-
-@STYLE.md
-
 ## Code
 
 - No comments. If needed, use Rails notes (`bin/rails notes`):
