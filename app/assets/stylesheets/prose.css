@@ -1,0 +1,28 @@
+@layer components {
+  .prose {
+    h2 {
+      font-size: var(--text-large);
+      margin-block: var(--block-space-double) var(--block-space-half);
+      color: var(--color-petrol-dark);
+    }
+
+    h3 {
+      font-size: var(--text-medium);
+      margin-block: var(--block-space-double) var(--block-space-half);
+      font-style: italic;
+      color: var(--color-graphite);
+    }
+
+    p {
+      margin-block-end: var(--block-space);
+    }
+
+    p + p {
+      margin-block-start: 0;
+    }
+
+    em {
+      font-style: italic;
+    }
+  }
+}
