@@ -1,6 +1,3 @@
-READ ../garde-rails/RAILS.md BEFORE ANYTHING.
-If missing: git clone https://github.com/fcatuhe/garde-rails.git ../garde-rails
-
 # Crooz
 
 Platform for car enthusiasts. Track vehicles, log fuel/maintenance, write ride stories.
@@ -16,65 +13,9 @@ bin/setup              # Initial setup
 bin/dev                # Dev server
 bin/rails test         # Unit tests
 bin/rails test:system  # System tests
-bin/ci                 # Full CI suite
+bin/ci                 # Full CI suite, the gate before handoff
 ```
-
-## Generators
-
-Prefer Rails generators:
-
-```bash
-bin/rails g model Refuel liters:decimal price_cents:integer
-bin/rails g controller Passages index show
-bin/rails g migration AddStartReadingToPassages start_reading:decimal
-bin/rails g authentication
-```
-
-## Code
-
-- No comments. If needed, use Rails notes (`bin/rails notes`):
-  - `TODO:` / `FIXME:` / `OPTIMIZE:`
-  - Format: `# TODO: FC 26jan26 description`
-- Files < 500 LOC; split if needed.
-- Bugs: add regression test.
-
-## Critical Thinking
-
-- Fix root cause (not band-aid).
-- Unsure: read more code; if still stuck, ask w/ short options.
-- Conflicts: call out; pick safer path.
-- Unrecognized changes: assume other agent; keep going; focus your changes. If it causes issues, stop + ask user.
-- Leave breadcrumb notes in thread.
-
-## Git
-
-- Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
-- Safe by default: no destructive ops (`reset --hard`, `clean`, `rm`) without consent.
-- Keep edits small/reviewable.
-- Never commit/push without explicit user request; permission applies to next command only.
-
-## GitHub CLI
-
-- PRs: use `gh pr view/diff` (no URLs).
-- CI: `gh run list/view`, rerun/fix til green.
-- PR comments: `gh pr view` + `gh api .../comments --paginate`.
-- Given issue/PR URL: use `gh`, not web search.
-
-## CI
-
-- Before handoff: run full gate (`bin/ci`).
-- CI red: fix, push, repeat til green.
-
-## Dependencies
-
-New deps: quick health check (recent commits, adoption, maintenance).
 
 ## Frontend
 
-Avoid "AI slop" UI. Be opinionated + distinctive.
-
-- No inline `style` attributes in HTML; use utility classes instead.
-- Typography: pick a real font; avoid system defaults.
-- Theme: commit to a palette; use CSS vars.
-- Motion: 1-2 high-impact moments, not random micro-anim.
-- Avoid: purple-on-white clichés, generic grids, predictable layouts.
+Typography: pick a real font, avoid system defaults.
