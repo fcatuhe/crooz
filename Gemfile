@@ -38,9 +38,6 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# INFO: fc 30jul26 image_processing + ruby-vips break boot where libvips is
-# absent (CI): Rails 8.1.3.1 requires image_processing/vips at boot and the
-# engine does not rescue its LoadError. Unused here, no attachments.
 # gem "image_processing", "~> 2.0"
 # gem "ruby-vips", "~> 2.3", require: false
 
