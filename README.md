@@ -41,24 +41,9 @@ KAMAL_WEB_HOST=your.server.ip.address
 bin/kamal deploy
 ```
 
-### Server provisioning (first time)
+### Server provisioning
 
-#### Required file (gitignored)
-
-`.infra/kamal-ansible-manager/inventory` — Ansible hosts:
-
-```ini
-[webservers]
-your.server.ip.address
-```
-
-#### Run
-
-```bash
-cd .infra/kamal-ansible-manager
-ansible-galaxy install -r requirements.yml
-ansible-playbook playbook.yml
-```
+Handled outside this repo, from [vps-ansible](https://github.com/fcatuhe/vps-ansible), which provisions the whole fleet from one inventory.
 
 ## License
 
