@@ -195,4 +195,4 @@ jobs:
         run: bundle exec kamal deploy
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          KAMAL_WEB_HOST: ${{ secrets.KAMAL_WEB_HOST }}
+          CROOZ_SERVER_IP: ${{ secrets.CROOZ_SERVER_IP }}
