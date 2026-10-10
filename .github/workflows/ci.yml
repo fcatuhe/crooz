@@ -124,7 +124,6 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
@@ -150,7 +149,6 @@ jobs:
       - name: Run System Tests
         env:
           RAILS_ENV: test
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test:system
 
@@ -195,4 +193,4 @@ jobs:
         run: bundle exec kamal deploy
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          KAMAL_WEB_HOST: ${{ secrets.KAMAL_WEB_HOST }}
+          CROOZ_SERVER_IP: ${{ secrets.CROOZ_SERVER_IP }}
