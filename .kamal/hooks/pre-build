@@ -1,0 +1,3 @@
+#!/bin/sh
+
+test -n "$RAILS_MASTER_KEY" || { echo "RAILS_MASTER_KEY is empty: deploy with mise run kamal deploy" >&2; exit 1; }

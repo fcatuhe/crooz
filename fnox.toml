@@ -1,0 +1,9 @@
+root = true
+if_missing = "error"
+
+[providers.bitwarden]
+type = "bitwarden"
+
+[secrets]
+RAILS_DEVELOPMENT_KEY = { provider = "bitwarden", value = "crooz-repository/RAILS_DEVELOPMENT_KEY", env = false }
+RAILS_PRODUCTION_KEY = { provider = "bitwarden", value = "crooz-repository/RAILS_PRODUCTION_KEY", env = "exec" }
