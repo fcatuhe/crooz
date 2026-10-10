@@ -15,13 +15,6 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
 
-  unless File.exist?("config/master.key")
-    puts "\n== Restoring the development credentials key from Bitwarden =="
-    key = IO.popen(%w[fnox get RAILS_DEVELOPMENT_KEY], &:read)
-    abort "fnox could not read RAILS_DEVELOPMENT_KEY: unlock Bitwarden with `export BW_SESSION=$(bw unlock --raw)`" unless $?.success?
-    File.write("config/master.key", key.strip, perm: 0o600)
-  end
-
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
