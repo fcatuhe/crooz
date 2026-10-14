@@ -10,6 +10,7 @@ Ruby 4.0, Rails 8.2, SQLite 3, Hotwire (Turbo + Stimulus), vanilla CSS/JS, Impor
 
 ```bash
 bin/setup              # Initial setup
+bin/setup --skip-server  # In a fresh worktree: links config/master.key from the main checkout
 bin/dev                # Dev server
 bin/rails test         # Unit tests
 bin/rails test:system  # System tests

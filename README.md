@@ -20,7 +20,7 @@ bin/setup
 
 The credentials keys live in Bitwarden, in the secure note `crooz-repository`, which [fnox](https://fnox.jdx.dev) reads through the `bw` CLI as `fnox.toml` maps it. It is named after the repository rather than `crooz` alone because `bw` finds an item by searching names, usernames and URLs, and a login for the site would match too.
 
-- `config/master.key` decrypts the development credentials and stays on disk. The dotfiles bootstrap writes it from the note's `RAILS_DEVELOPMENT_KEY`, mode 600.
+- `config/master.key` decrypts the development credentials and stays on disk. The dotfiles bootstrap writes it from the note's `RAILS_DEVELOPMENT_KEY`, mode 600. A worktree has none, so `bin/setup --skip-server`, run once inside one made by `git wt`, links it from the main checkout.
 - The production key never touches the disk. It is the note's `RAILS_PRODUCTION_KEY`, which `mise.toml` grants to two tasks only, as `RAILS_MASTER_KEY`, the name Rails and Kamal read: `mise run kamal ...` and `mise run credentials:production`. Rails reads `RAILS_MASTER_KEY` before any key file, whatever the environment, so it must never reach a development command, and nothing else sees it: not the shell, `mise env`, the shims, or an agent. The tasks' output shows it as `[redacted]`, except the credentials editor, which needs the terminal.
 
 ```bash

@@ -15,6 +15,12 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
 
+  unless File.directory?(".git") || File.exist?("config/master.key")
+    puts "\n== Linking the credentials key from the main checkout =="
+    main_checkout = File.dirname(IO.popen(%w[git rev-parse --path-format=absolute --git-common-dir], &:read).strip)
+    FileUtils.ln_sf File.join(main_checkout, "config/master.key"), "config/master.key"
+  end
+
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
