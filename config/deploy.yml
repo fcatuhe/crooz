@@ -96,9 +96,8 @@ builder:
   #   - GITHUB_TOKEN
   #   - RAILS_MASTER_KEY
 
-# Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  user: debian
 
 # Use accessory services (secrets come from .kamal/secrets).
 # accessories:
